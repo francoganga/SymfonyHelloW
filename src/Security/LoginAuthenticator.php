@@ -81,22 +81,18 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
-        $cred = $this->getCredentials($request);
-        $usr = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $cred['username']]);
-        if (!$usr) {
-            // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Username could not be found.');
-        }
-        $rol = $usr->getRoles()[0];
+        
+        $usr = $token->getUser();
 
-        if ($rol == "ROLE_USUARIOS_ADMIN") {
-            return new RedirectResponse($this->urlGenerator->generate('user_index'));
+        $redirect = null;
+
+        if($usr->getRoles()[0] == "ROLE_USUARIOS_ADMIN"){
+            $redirect = new RedirectResponse($this->urlGenerator->generate('user_index'));
         }else{
-            return new RedirectResponse($this->urlGenerator->generate('app_welcome'));
+            $redirect = new RedirectResponse($this->urlGenerator->generate('app_welcome'));
         }
+        return $redirect;
+
         //return new RedirectResponse($this->urlGenerator->generate('app_welcome'));
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);

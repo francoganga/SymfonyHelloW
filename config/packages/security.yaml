@@ -43,7 +43,7 @@ security:
 
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user, roles: ROLE_USUARIOS_ADMIN }
-        #- { path: ^/welcome, roles: ROLE_USUARIOS_BASICOS }
+        - { path: ^/welcome, roles: ROLE_USUARIOS_BASICOS }
 
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
