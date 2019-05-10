@@ -26,8 +26,7 @@ class SecurityController extends AbstractController
      */
     public function welcome(AuthenticationUtils $authenticationUtils): Response
     {
-        
-
         return $this->render('welcome.html.twig');
     }
+
 }
