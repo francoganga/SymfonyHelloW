@@ -18,12 +18,12 @@ use App\Form\RESTUserForm;
 
 /**
  * User Controller.
- * @Route("/api", name="app_api")
+ * @Route("/api")
  */
 Class RESTController extends FOSRestController{
 	 /**
    * Lists all users.
-   * @Rest\Get("/users")
+   * @Rest\Get("/usuarios")
    *
    * @return Response
    */
@@ -37,7 +37,7 @@ Class RESTController extends FOSRestController{
 
 	/**
    * Create User.
-   * @Rest\Post("/user")
+   * @Rest\Post("/usuario")
    *
    * @return Response
    */
@@ -54,6 +54,22 @@ Class RESTController extends FOSRestController{
 
 		return View::create($user, Response::HTTP_CREATED , []);
 	}
+	/**
+   * Create User.
+   * @Rest\Get("/usuarios/{userId}")
+   *
+   * @return Response
+   */
+	public function getUsr(int $userId): View{
+		$rep = $this->getDoctrine()->getRepository(User::class);
+		$user = $rep->findById($userId);
+		if (!$user){
+			echo 'Username could not be found.';
+		}
+		return View::create($user, Response::HTTP_OK);
+
+	}
+
 
 
 }
