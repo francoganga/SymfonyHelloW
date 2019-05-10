@@ -37,7 +37,7 @@ Class RESTController extends FOSRestController{
 
 	/**
    * Create User.
-   * @Rest\Post("/usuario")
+   * @Rest\Post("/usuarios")
    *
    * @return Response
    */
